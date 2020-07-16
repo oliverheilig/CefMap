@@ -1,0 +1,70 @@
+﻿<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://unpkg.com/mapbox-gl@1.10.0/dist/mapbox-gl.js'></script>
+    <link href='https://unpkg.com/mapbox-gl@1.10.0/dist/mapbox-gl.css' rel='stylesheet' />
+    <script src='../token.js'></script>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+
+ window.token = "E0B3EDE0-4F2B-448F-81CF-DF63DE9B6A36";
+
+var mapLocation = [8.4044, 49.01405];
+
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: {
+        "version": 8,
+        "sources": {
+            "simple-tiles": {
+                "type": "raster",
+                "tiles": [
+                    "http://a.tile.osm.org/{z}/{x}/{y}.png",
+                    "http://b.tile.osm.org/{z}/{x}/{y}.png",
+                    "http://c.tile.osm.org/{z}/{x}/{y}.png"
+                ],
+                "tileSize": 256,
+                "attribution": "PTV, HERE"
+            }
+        },
+        "layers": [{
+            "id": "simple-tiles",
+            "type": "raster",
+            "source": "simple-tiles",
+            "minzoom": 0,
+            "maxzoom": 23
+        }]
+    },
+    center: mapLocation, // starting position
+    zoom: 12 // starting zoom
+});
+
+// Add controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new mapboxgl.FullscreenControl());
+    
+// Add a marker with popup
+var marker = new mapboxgl.Marker()
+    .setLngLat(mapLocation)
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({ offset: 25 })
+    .setLngLat(mapLocation)
+    .setHTML("<b>Hello world!</b><br />I am a popup.")
+    .addTo(map);
+
+marker.setPopup(popup);
+
+</script>
+
+</body>
+</html>
