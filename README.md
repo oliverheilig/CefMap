@@ -1,2 +1,2 @@
 # CefMap
-boilerplate for a mit for WinForms with CefSharp and MapBox GL JS
+boilerplate for a map for WinForms with CefSharp and MapBox GL JS
