@@ -27,7 +27,9 @@ namespace CefMap
 
         public void InitializeChromium()
         {
-            CefSettings settings = new CefSettings();
+            CefSettings settings = new CefSettings
+            {
+            };
 
             // Initialize cef with the provided settings
             Cef.Initialize(settings);
@@ -38,6 +40,19 @@ namespace CefMap
             // Add it to the form and fill it to the form window.
             this.Controls.Add(chromeBrowser);
             chromeBrowser.Dock = DockStyle.Fill;
+
+            //Wait for the MainFrame to finish loading
+            chromeBrowser.FrameLoadEnd += (sender, args) =>
+            {
+                //Wait for the MainFrame to finish loading
+                if (args.Frame.IsMain)
+                {
+                    double latitude = 8.4044;
+                    double longitude = 49.01405;
+
+                    args.Frame.ExecuteJavaScriptAsync(FormattableString.Invariant($@"setMarker({latitude}, {longitude});"));
+                }
+            };
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

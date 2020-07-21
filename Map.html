@@ -16,53 +16,54 @@
 <div id='map'></div>
 <script>
 
- window.token = "E0B3EDE0-4F2B-448F-81CF-DF63DE9B6A36";
-
-var mapLocation = [8.4044, 49.01405];
-
-var map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: {
-        "version": 8,
-        "sources": {
-            "simple-tiles": {
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: {
+            "version": 8,
+            "sources": {
+                "simple-tiles": {
+                    "type": "raster",
+                    "tiles": [
+                        "http://a.tile.osm.org/{z}/{x}/{y}.png",
+                        "http://b.tile.osm.org/{z}/{x}/{y}.png",
+                        "http://c.tile.osm.org/{z}/{x}/{y}.png"
+                    ],
+                    "tileSize": 256,
+                    "attribution": "PTV, HERE"
+                }
+            },
+            "layers": [{
+                "id": "simple-tiles",
                 "type": "raster",
-                "tiles": [
-                    "http://a.tile.osm.org/{z}/{x}/{y}.png",
-                    "http://b.tile.osm.org/{z}/{x}/{y}.png",
-                    "http://c.tile.osm.org/{z}/{x}/{y}.png"
-                ],
-                "tileSize": 256,
-                "attribution": "PTV, HERE"
-            }
+                "source": "simple-tiles",
+                "minzoom": 0,
+                "maxzoom": 23
+            }]
         },
-        "layers": [{
-            "id": "simple-tiles",
-            "type": "raster",
-            "source": "simple-tiles",
-            "minzoom": 0,
-            "maxzoom": 23
-        }]
-    },
-    center: mapLocation, // starting position
-    zoom: 12 // starting zoom
-});
+        zoom: 12 // starting zoom
+    });
 
-// Add controls to the map.
-map.addControl(new mapboxgl.NavigationControl());
-map.addControl(new mapboxgl.FullscreenControl());
+    // Add controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.FullscreenControl());
     
-// Add a marker with popup
-var marker = new mapboxgl.Marker()
-    .setLngLat(mapLocation)
-    .addTo(map);
+    function setMarker(latitude, longitude) {
+        var mapLocation = [latitude, longitude];
 
-var popup = new mapboxgl.Popup({ offset: 25 })
-    .setLngLat(mapLocation)
-    .setHTML("<b>Hello world!</b><br />I am a popup.")
-    .addTo(map);
+        map.setCenter(mapLocation);
 
-marker.setPopup(popup);
+        // Add a marker with popup
+        var marker = new mapboxgl.Marker()
+            .setLngLat(mapLocation)
+            .addTo(map);
+
+        var popup = new mapboxgl.Popup({ offset: 25 })
+            .setLngLat(mapLocation)
+            .setHTML("<b>Hello world!</b><br />I am a popup.")
+            .addTo(map);
+
+        marker.setPopup(popup);
+    };
 
 </script>
 
