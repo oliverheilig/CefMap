@@ -26,15 +26,7 @@ namespace CefMap
         private ChromiumWebBrowser chromeBrowser;
 
         public void InitializeChromium()
-        {
-            CefSettings settings = new CefSettings
-            {
-            };
-
-            // Initialize cef with the provided settings
-            Cef.Initialize(settings);
-            Cef.EnableHighDPISupport();          
-           
+        {           
             // Create a browser component
             chromeBrowser = new ChromiumWebBrowser(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "Map.html"));
             // Add it to the form and fill it to the form window.
@@ -57,6 +49,7 @@ namespace CefMap
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            chromeBrowser.Dispose();
             Cef.Shutdown();
         }
      }

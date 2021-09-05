@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -13,29 +15,19 @@ namespace CefMap
         [STAThread]
         static void Main()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += Resolver;
+            CefRuntime.SubscribeAnyCpuAssemblyResolver();
+
+            CefSettings settings = new CefSettings
+            {
+            };
+
+            // Initialize cef with the provided settings
+            Cef.Initialize(settings);
+            Cef.EnableHighDPISupport();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-        }
-
-        // Will attempt to load missing assembly from either x86 or x64 subdir
-        private static Assembly Resolver(object sender, ResolveEventArgs args)
-        {
-            if (args.Name.StartsWith("CefSharp"))
-            {
-                string assemblyName = args.Name.Split(new[] { ',' }, 2)[0] + ".dll";
-                string archSpecificPath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
-                                                       Environment.Is64BitProcess ? "x64" : "x86",
-                                                       assemblyName);
-
-                return File.Exists(archSpecificPath)
-                           ? Assembly.LoadFile(archSpecificPath)
-                           : null;
-            }
-
-            return null;
         }
     }
 }
