@@ -33,16 +33,17 @@ namespace CefMap
             this.Controls.Add(chromeBrowser);
             chromeBrowser.Dock = DockStyle.Fill;
 
-            //Wait for the MainFrame to finish loading
+            // Wait for the MainFrame to finish loading
             chromeBrowser.FrameLoadEnd += (sender, args) =>
             {
-                //Wait for the MainFrame to finish loading
+                // Wait for the MainFrame to finish loading
                 if (args.Frame.IsMain)
                 {
                     double latitude = 8.4044;
                     double longitude = 49.01405;
 
-                    args.Frame.ExecuteJavaScriptAsync(FormattableString.Invariant($@"setMarker({latitude}, {longitude});"));
+                    args.Frame.ExecuteJavaScriptAsync(FormattableString.Invariant(
+                        $@"setMarker({latitude}, {longitude}, 15, 80, 10000);"));
                 }
             };
         }

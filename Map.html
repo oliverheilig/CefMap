@@ -3,8 +3,8 @@
     <meta charset='utf-8' />
     <title></title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://unpkg.com/mapbox-gl@1.10.0/dist/mapbox-gl.js'></script>
-    <link href='https://unpkg.com/mapbox-gl@1.10.0/dist/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://unpkg.com/maplibre-gl@1.14.0-rc.1/dist/maplibre-gl.js'></script>
+    <link href='https://unpkg.com/maplibre-gl@1.14.0-rc.1/dist/maplibre-gl.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -15,47 +15,48 @@
 <div id='map'></div>
 <script>
 
-    var map = new mapboxgl.Map({
+    // This is my personal api key. Please get your own free key at https://developer.myptv.com/
+    const apiKey = 'YjA2OGIzOGMxMjdiNGZkOGIwYTMwNmI0OGE4Y2ZiMTc6Y2QwZjUyMDYtMTk2Ni00N2NlLWFmNTYtNzBjOWZjZTgxNzJh';
+
+    const map = new maplibregl.Map({
         container: 'map', // container id
-        style: {
-            "version": 8,
-            "sources": {
-                "simple-tiles": {
-                    "type": "raster",
-                    "tiles": [
-                        "http://a.tile.osm.org/{z}/{x}/{y}.png",
-                        "http://b.tile.osm.org/{z}/{x}/{y}.png",
-                        "http://c.tile.osm.org/{z}/{x}/{y}.png"
-                    ],
-                    "tileSize": 256,
-                    "attribution": "&copy; OpenStreetMap contributors"
+        attributionControl: true,
+        customAttribution: '&copy; 2021 PTV AG, HERE',
+        pitch: 0,
+        antialias: true,
+        hash: true,
+        style: 'https://vectormaps-resources.myptv.com/styles/1_1_0/monochrome.json',
+        transformRequest: (url, resourceType) => {
+            if (resourceType === 'Tile' && url.startsWith('https://api.myptv.com')) {
+                return {
+                    url: url + '?apiKey=' + apiKey
                 }
-            },
-            "layers": [{
-                "id": "simple-tiles",
-                "type": "raster",
-                "source": "simple-tiles",
-                "minzoom": 0,
-                "maxzoom": 19
-            }]
+            }
         },
-        zoom: 12 // starting zoom
+        zoom: 0 // starting zoom
     });
 
     // Add controls to the map.
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new maplibregl.NavigationControl());
     
-    function setMarker(latitude, longitude) {
-        var mapLocation = [latitude, longitude];
+    function setMarker(latitude, longitude, zoom, pitch, duration) {
+        const mapLocation = [latitude, longitude];
 
-        map.setCenter(mapLocation);
+        // fly to location
+        map.flyTo({
+            center: [latitude, longitude],
+            pitch: pitch,
+            bearing: 0,
+            duration: duration,
+            zoom: zoom
+        });
 
         // Add a marker with popup
-        var marker = new mapboxgl.Marker()
+        const marker = new maplibregl.Marker()
             .setLngLat(mapLocation)
             .addTo(map);
 
-        var popup = new mapboxgl.Popup({ offset: 25 })
+        const popup = new maplibregl.Popup({ offset: 25 })
             .setLngLat(mapLocation)
             .setHTML("<b>Hello world!</b><br />I am a popup.")
             .addTo(map);
