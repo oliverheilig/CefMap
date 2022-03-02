@@ -1,4 +1,4 @@
 # CefMap
-Boilerplate for a map with WinForms using CefSharp and LibreMap
+Boilerplate for a map with WinForms using CefSharp and MapLibre
 
 ![screenshot](https://raw.githubusercontent.com/oliverheilig/CefMap/master/screenshot.jpg)
