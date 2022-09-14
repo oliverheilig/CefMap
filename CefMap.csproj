@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\CefSharp.Common.98.1.210\build\CefSharp.Common.props" Condition="Exists('packages\CefSharp.Common.98.1.210\build\CefSharp.Common.props')" />
-  <Import Project="packages\cef.redist.x86.98.1.21\build\cef.redist.x86.props" Condition="Exists('packages\cef.redist.x86.98.1.21\build\cef.redist.x86.props')" />
-  <Import Project="packages\cef.redist.x64.98.1.21\build\cef.redist.x64.props" Condition="Exists('packages\cef.redist.x64.98.1.21\build\cef.redist.x64.props')" />
+  <Import Project="packages\CefSharp.Common.105.3.330\build\CefSharp.Common.props" Condition="Exists('packages\CefSharp.Common.105.3.330\build\CefSharp.Common.props')" />
+  <Import Project="packages\cef.redist.x86.105.3.33\build\cef.redist.x86.props" Condition="Exists('packages\cef.redist.x86.105.3.33\build\cef.redist.x86.props')" />
+  <Import Project="packages\cef.redist.x64.105.3.33\build\cef.redist.x64.props" Condition="Exists('packages\cef.redist.x64.105.3.33\build\cef.redist.x64.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -44,17 +44,72 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CefSharp, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>packages\CefSharp.Common.98.1.210\lib\net452\CefSharp.dll</HintPath>
+    <Reference Include="Azure.Core, Version=1.6.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>packages\Azure.Core.1.6.0\lib\net461\Azure.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp.Core, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>packages\CefSharp.Common.98.1.210\lib\net452\CefSharp.Core.dll</HintPath>
+    <Reference Include="CefSharp, Version=105.3.330.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>packages\CefSharp.Common.105.3.330\lib\net452\CefSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="CefSharp.WinForms, Version=98.1.210.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
-      <HintPath>packages\CefSharp.WinForms.98.1.210\lib\net462\CefSharp.WinForms.dll</HintPath>
+    <Reference Include="CefSharp.Core, Version=105.3.330.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>packages\CefSharp.Common.105.3.330\lib\net452\CefSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CefSharp.WinForms, Version=105.3.330.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=MSIL">
+      <HintPath>packages\CefSharp.WinForms.105.3.330\lib\net462\CefSharp.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JsonSubTypes, Version=1.9.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176, processorArchitecture=MSIL">
+      <HintPath>packages\JsonSubTypes.1.9.0\lib\net47\JsonSubTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Rest.ClientRuntime.2.3.23\lib\net461\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Polly, Version=7.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
+      <HintPath>packages\Polly.7.2.3\lib\net472\Polly.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.13.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>packages\RestSharp.106.13.0\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +127,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GeocodingClient.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeocodingClient.json</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -88,7 +148,13 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
+    <None Include="GeocodingClient.json">
+      <Generator>OpenApiCodeGenerator</Generator>
+      <LastGenOutput>GeocodingClient.cs</LastGenOutput>
+      <CustomToolNamespace>GeocodingClient</CustomToolNamespace>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\GeocodingClient.Model.Location.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -112,10 +178,10 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\cef.redist.x64.98.1.21\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.x64.98.1.21\build\cef.redist.x64.props'))" />
-    <Error Condition="!Exists('packages\cef.redist.x86.98.1.21\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.x86.98.1.21\build\cef.redist.x86.props'))" />
-    <Error Condition="!Exists('packages\CefSharp.Common.98.1.210\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.98.1.210\build\CefSharp.Common.props'))" />
-    <Error Condition="!Exists('packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('packages\cef.redist.x64.105.3.33\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.x64.105.3.33\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('packages\cef.redist.x86.105.3.33\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.x86.105.3.33\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('packages\CefSharp.Common.105.3.330\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.105.3.330\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('packages\CefSharp.Common.105.3.330\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.105.3.330\build\CefSharp.Common.targets'))" />
   </Target>
-  <Import Project="packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets" Condition="Exists('packages\CefSharp.Common.98.1.210\build\CefSharp.Common.targets')" />
+  <Import Project="packages\CefSharp.Common.105.3.330\build\CefSharp.Common.targets" Condition="Exists('packages\CefSharp.Common.105.3.330\build\CefSharp.Common.targets')" />
 </Project>

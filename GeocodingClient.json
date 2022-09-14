@@ -1,0 +1,829 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Geocoding",
+    "description": "With the Geocoding service you can find locations by converting street addresses into GPS-coordinates and vice versa. The Places service allows to search for millions of shops and prominent points of interest in various categories.",
+    "version": "1.4",
+    "contact": {
+      "url": "https://developer.myptv.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Locations"
+    },
+    {
+      "name": "Places"
+    },
+    {
+      "name": "Categories"
+    }
+  ],
+  "paths": {
+    "/locations/by-text": {
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Searches for locations based on a single-field text input.",
+        "operationId": "searchLocationsByText",
+        "parameters": [
+          {
+            "name": "searchText",
+            "in": "query",
+            "description": "Free-form text input that describes a location.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CountryFilterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LanguageParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationsSearchResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/locations/by-address": {
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Searches for locations based on a multi-field address input.",
+        "operationId": "searchLocationsByAddress",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "description": "The country in which the locations should be searched. A country may be defined by name, ISO code (ISO 3166-1 alpha-2 or alpha-3) or country code plate.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "A subdivision of a country, for example a state, a region or a province. Using this field narrows down the search and reduces the number of possible results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "locality",
+            "in": "query",
+            "description": "The locality of the address, which may be a city, a district or subdistrict.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "postalCode",
+            "in": "query",
+            "description": "The postal code, or zip-code, which is used by a postal authority of a country to identify where the address is located.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "street",
+            "in": "query",
+            "description": "The name of the road where the address is located. It must not contain additional information like building names, floor numbers or apartment numbers. It may contain a house number, but using the **houseNumber** field instead will lead to better results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "houseNumber",
+            "in": "query",
+            "description": "The house number of the address.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CountryFilterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LanguageParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationsSearchResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/locations/by-position/{latitude}/{longitude}": {
+      "get": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Searches for locations near a given geographical position.",
+        "operationId": "searchLocationsByPosition",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LatitudeParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LongitudeParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LanguageParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationsSearchResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/places/by-position/{latitude}/{longitude}": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "description": "Searches for places near a given geographical position.",
+        "operationId": "searchPlacesByPosition",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LatitudeParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LongitudeParameter"
+          },
+          {
+            "$ref": "#/components/parameters/RadiusParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CategoryFilterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LimitParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LanguageParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlacesSearchResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/place-categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "Returns the list of place categories.",
+        "operationId": "getPlaceCategories",
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaceCategories"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/places/by-area": {
+      "post": {
+        "tags": [
+          "Places"
+        ],
+        "description": "Searches for places within a requested area.",
+        "operationId": "searchPlacesByArea",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlacesByAreaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CategoryFilterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LanguageParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlacesSearchResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PlacesByAreaRequest": {
+        "type": "object",
+        "required": [
+          "area"
+        ],
+        "properties": {
+          "area": {
+            "$ref": "#/components/schemas/Area"
+          }
+        }
+      },
+      "Area": {
+        "type": "object",
+        "required": [
+          "geometry"
+        ],
+        "properties": {
+          "geometry": {
+            "type": "string"
+          }
+        },
+        "description": "Defines the area as [GeoJSON](https://datatracker.ietf.org/doc/html/rfc7946) geometry. Supported geometry types are Polygon and MultiPolygon. Geometries that cause too long processing times will be rejected. In this case an error response is returned that explains the reason."
+      },
+      "Latitude": {
+        "type": "number",
+        "minimum": -90,
+        "maximum": 90,
+        "description": "The latitude value in degrees (WGS84/EPSG:4326) from south to north.",
+        "format": "double"
+      },
+      "Longitude": {
+        "type": "number",
+        "minimum": -180,
+        "maximum": 180,
+        "description": "The longitude value in degrees (WGS84/EPSG:4326) from west to east.",
+        "format": "double"
+      },
+      "ReferencePosition": {
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "properties": {
+          "latitude": {
+            "$ref": "#/components/schemas/Latitude"
+          },
+          "longitude": {
+            "$ref": "#/components/schemas/Longitude"
+          }
+        },
+        "description": "The actual position of the object itself, such as the rooftop of a building, the center of a street, or the reference position of a city."
+      },
+      "RoadAccessPosition": {
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "properties": {
+          "latitude": {
+            "$ref": "#/components/schemas/Latitude"
+          },
+          "longitude": {
+            "$ref": "#/components/schemas/Longitude"
+          }
+        },
+        "description": "A position on or very close to a road that marks the entry to the object. Available only for objects which represent buildings with a complete address and only if present in the data.  \n The road from which the object can be accessed is not necessarily the road which is closest to the object."
+      },
+      "PlacesSearchResult": {
+        "description": "The result of a places search.",
+        "type": "object",
+        "properties": {
+          "places": {
+            "description": "The found places.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Place"
+            }
+          },
+          "warnings": {
+            "description": "A list of warnings concerning the validity of the result.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Warning"
+            }
+          }
+        }
+      },
+      "Place": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationProperties"
+          },
+          {
+            "required": [
+              "categoryIds",
+              "quality"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the place."
+              },
+              "categoryIds": {
+                "type": "array",
+                "description": "An array of place category IDs representing the categories this place is assigned to.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "quality": {
+                "$ref": "#/components/schemas/Quality"
+              }
+            }
+          }
+        ]
+      },
+      "LocationsSearchResult": {
+        "description": "The result of a locations search.",
+        "type": "object",
+        "required": [
+          "locations"
+        ],
+        "properties": {
+          "locations": {
+            "type": "array",
+            "description": "The found locations.",
+            "items": {
+              "$ref": "#/components/schemas/Location"
+            }
+          },
+          "warnings": {
+            "description": "A list of warnings concerning the validity of the result.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Warning"
+            }
+          }
+        }
+      },
+      "Location": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LocationProperties"
+          },
+          {
+            "required": [
+              "quality",
+              "locationType"
+            ],
+            "type": "object",
+            "properties": {
+              "locationType": {
+                "$ref": "#/components/schemas/LocationType"
+              },
+              "quality": {
+                "$ref": "#/components/schemas/Quality"
+              }
+            }
+          }
+        ]
+      },
+      "LocationType": {
+        "type": "string",
+        "enum": [
+          "LOCALITY",
+          "POSTAL_CODE",
+          "STREET",
+          "EXACT_ADDRESS",
+          "INTERPOLATED_ADDRESS",
+          "INTERSECTION",
+          "POINT_OF_INTEREST"
+        ],
+        "x-enum-varnames": [
+          "LOCALITY",
+          "POSTAL_CODE",
+          "STREET",
+          "EXACT_ADDRESS",
+          "INTERPOLATED_ADDRESS",
+          "INTERSECTION",
+          "POINT_OF_INTEREST"
+        ],
+        "description": "Distinguishes different types of Locations:  \n * `LOCALITY` - Represents a locality (town, city or place).  \n * `POSTAL_CODE` - Represents a postal code area.  \n * `STREET` - Represents a street, or a section of a street.  \n * `EXACT_ADDRESS:` - An address that is contained exactly in the geocoding data.   \n * `INTERPOLATED_ADDRESS` - An address that was interpolated from an address range.   \n * `INTERSECTION` - An at-grade junction where two streets meet.   \n * `POINT_OF_INTEREST` - A point of interest, like e.g. a shop, a service, or a museum."
+      },
+      "LocationProperties": {
+        "required": [
+          "address",
+          "referencePosition"
+        ],
+        "type": "object",
+        "properties": {
+          "referencePosition": {
+            "$ref": "#/components/schemas/ReferencePosition"
+          },
+          "roadAccessPosition": {
+            "$ref": "#/components/schemas/RoadAccessPosition"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "formattedAddress": {
+            "type": "string",
+            "description": "A single string representing the address, typically consisting of the street, house number, postal code, city, and country. The precise format may differ based on what is appropriate for the address."
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "countryName": {
+            "type": "string",
+            "description": "The country. In a response, it is represented by its full name (not abbreviated or encoded)."
+          },
+          "state": {
+            "type": "string",
+            "description": "The name of the principal country subdivision which the address belongs to (for example, a state in the USA, or a canton in Switzerland)."
+          },
+          "province": {
+            "type": "string",
+            "description": "The name of the second-level country subdivision which the address belongs to (for example, a county in the UK, or a province in Italy)."
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "The postal code of the address."
+          },
+          "city": {
+            "type": "string",
+            "description": "The city of the address, i.e. the highest entity at the communal level which the address belongs to."
+          },
+          "district": {
+            "type": "string",
+            "description": "The district of the address, i.e. the entity below city."
+          },
+          "subdistrict": {
+            "type": "string",
+            "description": "The subdistrict of the address, i.e. the entity below district."
+          },
+          "street": {
+            "type": "string",
+            "description": "The street of the address."
+          },
+          "houseNumber": {
+            "type": "string",
+            "description": "The house number of the address."
+          }
+        },
+        "description": "Represents the address of a geographical object. Whenever a string, such as a city or street name, is available in multiple languages, it is returned in the default language specified by the country in which an object is located. Most of the fields are optional, because addressing schemes vary strongly between countries."
+      },
+      "PlaceCategory": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identifier string of the category."
+          },
+          "name": {
+            "type": "string",
+            "description": "A human readable name for the category."
+          },
+          "description": {
+            "type": "string",
+            "description": "An explanation of what kind of places are part of this category."
+          }
+        }
+      },
+      "PlaceCategories": {
+        "type": "object",
+        "description": "Response type for place category requests.",
+        "properties": {
+          "placeCategories": {
+            "type": "array",
+            "description": "The individual place categories.",
+            "items": {
+              "$ref": "#/components/schemas/PlaceCategory"
+            }
+          }
+        }
+      },
+      "Quality": {
+        "type": "object",
+        "description": "Quality indicators that help deciding how well a result fits to the search input.",
+        "properties": {
+          "distance": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The spatial distance in \\[m\\] between the location or the place and the input of a position search.  \n This is only available for **searchLocationsByPosition** and **searchPlacesByPosition**.",
+            "nullable": true
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "int32",
+            "description": "An overall score in \\[%\\] for address searches. 100 percent represents a perfect match between the input and the result.  \n This is only available for **searchLocationsByText** and **searchLocationsByAddress** results.",
+            "nullable": true
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": [
+          "description",
+          "errorCode",
+          "traceId"
+        ],
+        "properties": {
+          "description": {
+            "description": "A human readable message that describes the error.",
+            "type": "string"
+          },
+          "errorCode": {
+            "description": "A constant string that can be used to identify this error class programmatically. An errorCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified.  \n\nNote that additional errorCodes as well as the **details** of existing errorCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n**HTTP status code: 400**  \n* `GENERAL_VALIDATION_ERROR` - The validation of the request failed. Details can be found in **causes**.  \n* `GENERAL_PARSING_ERROR` - The JSON syntax is invalid.  \n\n**HTTP status code: 401**  \n* `GENERAL_UNAUTHENTICATED` - Invalid or missing authentication credentials.  \n  * `message` - An additional error message.  \n\n**HTTP status code: 403**  \n* `GENERAL_FORBIDDEN` - Insufficient access rights.  \n* `GENERAL_QUOTA_EXCEEDED` - The transaction limit is exceeded.  \n  * `message` - An additional error message.  \n\n**HTTP status code: 404**  \n* `GENERAL_RESOURCE_NOT_FOUND` - A requested resource does not exist.  \n  * `message` - An additional error message.  \n\n**HTTP status code: 429**  \n* `GENERAL_RATE_LIMIT_EXCEEDED` - The rate limit is exceeded.  \n\n**HTTP status code: 500**  \n* `GENERAL_INTERNAL_SERVER_ERROR` - The request could not be processed due to an internal error.  \n  * `message` - An additional error message.  \n  * `hint` - A hint how to solve the problem.  \n\n**HTTP status code: 503**  \n* `GENERAL_SERVICE_UNAVAILABLE` - The service is temporarily unavailable.",
+            "type": "string"
+          },
+          "traceId": {
+            "description": "A unique identifier of the corresponding trace forest. It can be used to trace errors by the support.",
+            "type": "string"
+          },
+          "errorId": {
+            "description": "A unique identifier specific to this error instance. It can be used to trace errors by the support.",
+            "type": "string"
+          },
+          "causes": {
+            "description": "A list of affected parameters and/or properties that caused this error.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CausingError"
+            }
+          },
+          "details": {
+            "description": "Additional properties specific to this error class.",
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "CausingError": {
+        "type": "object",
+        "required": [
+          "description",
+          "errorCode"
+        ],
+        "properties": {
+          "description": {
+            "description": "A human readable message that describes the error.",
+            "type": "string"
+          },
+          "errorCode": {
+            "description": "A constant string that can be used to identify this error class programmatically. An errorCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified. \n\nNote that additional errorCodes as well as the **details** of existing errorCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n**Error codes for** `GENERAL_VALIDATION_ERROR`\n* `GENERAL_INVALID_VALUE` - A parameter is set to an invalid value.  \n  * `value` - The invalid value.   \n* `GENERAL_UNRECOGNIZED_PARAMETER` - A parameter is unknown.  \n* `GENERAL_MISSING_PARAMETER` - A required parameter is missing.  \n* `GENERAL_DUPLICATE_PARAMETER` - A parameter is duplicated.  \n* `GENERAL_MINIMUM_VALUE_VIOLATED` - The minimum value restriction is violated.  \n  * `minimumValue` - The minimum value (integer or double).  \n* `GENERAL_MAXIMUM_VALUE_VIOLATED` - The maximum value restriction is violated.  \n  * `maximumValue` - The maximum value (integer or double).  \n* `GENERAL_MINIMUM_LENGTH_VIOLATED` - The minimum length is violated.  \n  * `minimumLength` - The minimum length (integer).  \n* `GENERAL_MAXIMUM_LENGTH_VIOLATED` - The maximum length is violated.  \n  * `maximumLength` - The maximum length (integer).",
+            "type": "string"
+          },
+          "parameter": {
+            "description": "The name of the affected query or path parameter or a JSONPath to the affected property of the request.",
+            "type": "string"
+          },
+          "details": {
+            "description": "Additional properties specific to this error class.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Warning": {
+        "type": "object",
+        "required": [
+          "description",
+          "warningCode"
+        ],
+        "properties": {
+          "description": {
+            "description": "A human readable message that describes the warning.",
+            "type": "string"
+          },
+          "warningCode": {
+            "description": "A constant string that can be used to identify this warning class programmatically. A warningCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified.  \n\nNote that additional warningCodes as well as the **details** of existing warningCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n* `GEOCODING_COUNTRY_FILTER_MODIFIED` - A given code in **countryFilter** referring to a subdivision of a country was modified to its corresponding country code.  \n  * `requestedSubdivisionCode` - The subdivision code that was originally requested.  \n  * `fallbackCountryCode` - The country code that was used as a fallback in the search.  \n* `GEOCODING_TIMEOUT` - The search ran into a timeout while trying to find results.  \n* `GEOCODING_INPUT_TOO_LONG` - The input was rejected because it is too long.  \n  * `maximumSize` - The maximum allowed size of a singleField request.  \n  * `GEOCODING_TOO_MANY_RESULTS` - Too many results found. Not all of them are provided in the response.  ",
+            "type": "string"
+          },
+          "details": {
+            "description": "Additional properties specific to this class of warnings.",
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "parameters": {
+      "LatitudeParameter": {
+        "name": "latitude",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/Latitude"
+        }
+      },
+      "LongitudeParameter": {
+        "name": "longitude",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/Longitude"
+        }
+      },
+      "RadiusParameter": {
+        "name": "radius",
+        "in": "query",
+        "description": "The search radius [m] around the given position.",
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 1000,
+          "minimum": 0,
+          "maximum": 10000
+        }
+      },
+      "CountryFilterParameter": {
+        "name": "countryFilter",
+        "in": "query",
+        "style": "form",
+        "explode": false,
+        "description": "A comma-separated list of country codes according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) or [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) if referring to a subdivision. The search will only consider data from countries with these codes. If no filter is specified, all countries are taken into account. However, empty values are not allowed. \n   If a given subdivision code is not supported, only the first two digits referring to the country is be considered in the search and a **warningCode** `GEOCODING_COUNTRY_FILTER_MODIFIED` is be returned with the response.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "[A-Z]{2}|[A-Z]{2}-[A-Z0-9]{1,3}"
+          }
+        },
+        "example": [
+          "DE",
+          "FR"
+        ]
+      },
+      "CategoryFilterParameter": {
+        "name": "categoryFilter",
+        "in": "query",
+        "style": "form",
+        "explode": false,
+        "description": "A comma-separated list of place category IDs. Only results having one of these categories will be returned. If no filter is specified, all categories will be returned. However, empty values are not allowed.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "[^\\\\\\\"\\'\\r\\t\\f\\v]+"
+          }
+        },
+        "example": [
+          "navteq-lcms:700-7200-0328",
+          "navteq-lcms:700-7400-0292"
+        ]
+      },
+      "LimitParameter": {
+        "name": "limit",
+        "in": "query",
+        "description": "Limits the number of results that are returned.",
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 5,
+          "minimum": 0
+        }
+      },
+      "LanguageParameter": {
+        "name": "language",
+        "in": "query",
+        "description": "The preferred language for the response formatted according to [ISO-639-1](https://www.loc.gov/standards/iso639-2/php/code_list.php) for languages or [BCP47](https://tools.ietf.org/html/bcp47) for language variants. By default the service uses the language spoken in the country or region of the result. In case the given preferred language is not available in the data, the default language is used.",
+        "schema": {
+          "type": "string",
+          "pattern": "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
+        },
+        "example": "en"
+      }
+    },
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "apiKey"
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.myptv.com/geocoding/v1"
+    }
+  ]
+}
