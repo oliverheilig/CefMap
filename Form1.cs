@@ -41,7 +41,7 @@ namespace CefMap
             browser = new ChromiumWebBrowser(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
                 $"Map.html?apiKey={apiKey}"));
 
-            // Add it to the form and fill it to the form window.
+            // Add it to the form and fill it to the container panel.
             this.mapPanel.Controls.Add(browser);
             browser.Dock = DockStyle.Fill;
 
@@ -64,12 +64,13 @@ namespace CefMap
             switch (message.Event)
             {
                 case "click":
-                    // need to warp longitude (outside -180/+180)
+                    // need to wrap longitude (outside -180/+180)
                     var result = locationsApi.SearchLocationsByPosition(message.Lat, (message.Lng % 360 + 540) % 360 - 180);
 
                     // have to invoke it on the WinForms thread
                     if(InvokeRequired) 
                         Invoke(new Action(() => SetLocations(result.Locations)));
+                        
                     break;
             }
         }

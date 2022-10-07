@@ -78,7 +78,7 @@
             currentMarkers.push(marker)
         });
 
-        map.fitBounds(llb);
+        map.fitBounds(llb, { padding: 30, maxZoom: 16 });
     }
 
     function get(name){
