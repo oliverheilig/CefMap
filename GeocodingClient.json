@@ -3,7 +3,7 @@
   "info": {
     "title": "Geocoding",
     "description": "With the Geocoding service you can find locations by converting street addresses into GPS-coordinates and vice versa. The Places service allows to search for millions of shops and prominent points of interest in various categories.",
-    "version": "1.4",
+    "version": "1.5",
     "contact": {
       "url": "https://developer.myptv.com/"
     }
@@ -180,6 +180,63 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LocationsSearchResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Response on failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/places/by-text": {
+      "get": {
+        "tags": [
+          "Places"
+        ],
+        "description": "Searches for places based on a single-field text input.",
+        "operationId": "searchPlacesByText",
+        "parameters": [
+          {
+            "name": "searchText",
+            "in": "query",
+            "description": "Free-form text input that describes a place.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CategoryFilterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CountryFilterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/LanguageParameter"
+          },
+          {
+            "$ref": "#/components/parameters/CenterParameter"
+          },
+          {
+            "$ref": "#/components/parameters/BoundingBoxParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlacesSearchResult"
                 }
               }
             }
@@ -682,7 +739,7 @@
             "type": "string"
           },
           "errorCode": {
-            "description": "A constant string that can be used to identify this error class programmatically. An errorCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified. \n\nNote that additional errorCodes as well as the **details** of existing errorCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n**Error codes for** `GENERAL_VALIDATION_ERROR`\n* `GENERAL_INVALID_VALUE` - A parameter is set to an invalid value.  \n  * `value` - The invalid value.   \n* `GENERAL_UNRECOGNIZED_PARAMETER` - A parameter is unknown.  \n* `GENERAL_MISSING_PARAMETER` - A required parameter is missing.  \n* `GENERAL_DUPLICATE_PARAMETER` - A parameter is duplicated.  \n* `GENERAL_MINIMUM_VALUE_VIOLATED` - The minimum value restriction is violated.  \n  * `minimumValue` - The minimum value (integer or double).  \n* `GENERAL_MAXIMUM_VALUE_VIOLATED` - The maximum value restriction is violated.  \n  * `maximumValue` - The maximum value (integer or double).  \n* `GENERAL_MINIMUM_LENGTH_VIOLATED` - The minimum length is violated.  \n  * `minimumLength` - The minimum length (integer).  \n* `GENERAL_MAXIMUM_LENGTH_VIOLATED` - The maximum length is violated.  \n  * `maximumLength` - The maximum length (integer).",
+            "description": "A constant string that can be used to identify this error class programmatically. An errorCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified. \n\nNote that additional errorCodes as well as the **details** of existing errorCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n**Error codes for** `GENERAL_VALIDATION_ERROR`\n* `GENERAL_INVALID_VALUE` - A parameter is set to an invalid value.  \n  * `value` - The invalid value.   \n* `GENERAL_UNRECOGNIZED_PARAMETER` - A parameter is unknown.  \n* `GENERAL_MISSING_PARAMETER` - A required parameter is missing.  \n* `GENERAL_DUPLICATE_PARAMETER` - A parameter is duplicated.  \n* `GENERAL_MINIMUM_VALUE_VIOLATED` - The minimum value restriction is violated.  \n  * `minimumValue` - The minimum value (integer or double).  \n* `GENERAL_MAXIMUM_VALUE_VIOLATED` - The maximum value restriction is violated.  \n  * `maximumValue` - The maximum value (integer or double).  \n* `GENERAL_MINIMUM_LENGTH_VIOLATED` - The minimum length is violated.  \n  * `minimumLength` - The minimum length (integer).  \n* `GENERAL_MAXIMUM_LENGTH_VIOLATED` - The maximum length is violated.  \n  * `maximumLength` - The maximum length (integer).\n* `GEOCODING_PARAMETER_CONFLICT` - Conflicting parameters found. Only one of them is allowed.  \n  * `conflictingParameter` - The name of the conflicting parameter.",
             "type": "string"
           },
           "parameter": {
@@ -710,7 +767,7 @@
             "type": "string"
           },
           "warningCode": {
-            "description": "A constant string that can be used to identify this warning class programmatically. A warningCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified.  \n\nNote that additional warningCodes as well as the **details** of existing warningCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n* `GEOCODING_COUNTRY_FILTER_MODIFIED` - A given code in **countryFilter** referring to a subdivision of a country was modified to its corresponding country code.  \n  * `requestedSubdivisionCode` - The subdivision code that was originally requested.  \n  * `fallbackCountryCode` - The country code that was used as a fallback in the search.  \n* `GEOCODING_TIMEOUT` - The search ran into a timeout while trying to find results.  \n* `GEOCODING_INPUT_TOO_LONG` - The input was rejected because it is too long.  \n  * `maximumSize` - The maximum allowed size of a singleField request.  \n  * `GEOCODING_TOO_MANY_RESULTS` - Too many results found. Not all of them are provided in the response.  ",
+            "description": "A constant string that can be used to identify this warning class programmatically. A warningCode can have **details** to provide information in additional properties which are described with the code they apply to. They are of type string unless otherwise specified.  \n\nNote that additional warningCodes as well as the **details** of existing warningCodes may be added at any time. Furthermore, the **description** may change at any time.  \n\n* `GEOCODING_COUNTRY_FILTER_MODIFIED` - A given code in **countryFilter** referring to a subdivision of a country was modified to its corresponding country code.  \n  * `requestedSubdivisionCode` - The subdivision code that was originally requested.  \n  * `fallbackCountryCode` - The country code that was used as a fallback in the search.  \n* `GEOCODING_TIMEOUT` - The search ran into a timeout while trying to find results.  \n* `GEOCODING_INPUT_TOO_LONG` - The input was rejected because it is too long.  \n  * `maximumSize` - The maximum allowed size of a singleField request.  \n* `TOO_MANY_INPUT_WORDS` - At least one of the input fields exceeded the maximum number of input words.  \n  * `inputField` - The input field that had too many input words.\n  * `actualNumberOfWords` - The number of words found in `inputField`.\n  * `maximumAllowedNumberOfWords` - The maximum number of words allowed in `inputField`.\n* `GEOCODING_TOO_MANY_RESULTS` - Too many results found. Not all of them are provided in the response.  ",
             "type": "string"
           },
           "details": {
@@ -755,7 +812,7 @@
         "in": "query",
         "style": "form",
         "explode": false,
-        "description": "A comma-separated list of country codes according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) or [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) if referring to a subdivision. The search will only consider data from countries with these codes. If no filter is specified, all countries are taken into account. However, empty values are not allowed. \n   If a given subdivision code is not supported, only the first two digits referring to the country is be considered in the search and a **warningCode** `GEOCODING_COUNTRY_FILTER_MODIFIED` is be returned with the response.",
+        "description": "A comma-separated list of country codes according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) or [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) if referring to a subdivision. The search will only consider data from countries with these codes. If no filter is specified, all countries are taken into account. However, empty values are not allowed. \n   If a given subdivision code is not supported, only the first two digits referring to the country are considered in the search and a **warningCode** `GEOCODING_COUNTRY_FILTER_MODIFIED` is returned with the response.",
         "schema": {
           "type": "array",
           "items": {
@@ -806,6 +863,48 @@
           "pattern": "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
         },
         "example": "en"
+      },
+      "CenterParameter": {
+        "name": "center",
+        "in": "query",
+        "style": "form",
+        "explode": false,
+        "description": "Defines a circular search context. The format of the `center` parameter is a comma-separated pair of double values setting the latitude and longitude, i. e. `<lat>,<lon>`. The values for the latitude from south to north between -90 and 90 and for the longitude between -180 and 180 from west to east are in degrees (WGS84/EPSG:4326). Note: The parameters `center` and `boundingBox` are mutually exclusive.",
+        "schema": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "example": [
+          49.0131,
+          8.4279
+        ]
+      },
+      "BoundingBoxParameter": {
+        "name": "boundingBox",
+        "in": "query",
+        "style": "form",
+        "explode": false,
+        "description": "Defines a rectangular search context. The format of the `boundingBox` parameter is a comma-separated list of double values setting the maximum latitude _top_, the minimum longitude _left_, the minimum latitude _bottom_ and the maximum longitude _right_, i. e. `<top>,<left>,<bottom>,<right>`. The values for _top_ and _bottom_ from south to north between -90 and 90 as well as for _left_ and _right_ between -180 and 180 from west to east are in degrees (WGS84/EPSG:4326). Note: The parameters `boundingBox` and `center` are mutually exclusive.",
+        "schema": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "example": [
+          49.0135,
+          8.4279,
+          49.0124,
+          8.4308
+        ]
       }
     },
     "securitySchemes": {
